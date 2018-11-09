@@ -81,14 +81,13 @@ class ReactiveBase extends Component {
 		let selectedValues = {};
 
 		try {
-			Array.from(params.keys()).forEach((key) => {
+			Array.from(this.params.keys()).forEach((key) => {
 				selectedValues = {
 					...selectedValues,
-					[key]: { value: JSON.parse(params.get(key)) },
+					[key]: { value: Object.prototype.toString.call(JSON.parse(this.params.get(key))) === '[object String]' ? this.params.get(key) : JSON.parse(this.params.get(key)) },
 				};
 			});
 		} catch (e) {
-			console.error('REACTIVESEARCH - An error occured while parsing the URL state.', e);
 			selectedValues = {};
 		}
 
